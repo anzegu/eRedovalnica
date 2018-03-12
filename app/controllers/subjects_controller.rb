@@ -1,0 +1,38 @@
+class SubjectsController < ApplicationController
+    before_action :find_subject, only: [:show, :edit, :update, :destroy]
+    
+    def index
+        @subjects = Subject.where(user_id: current_user)
+    end
+    
+    def new
+        @subject = current_user.subjects.build
+    end
+    
+    def create
+        @subject = current_user.subjects.build(subject_params)
+    end
+    
+    def updated
+       if @subject.update
+           redirect_to @subject
+       else
+           render 'new'
+       end
+    end
+    
+    def destroy
+       @subject.destroy
+       redirect_to subjects_path
+    end
+    
+    private
+    
+    def find_subject
+        @subject = Subject.find(params[:id])
+    end
+    
+    def subject_params
+       params.require(:subject).permit(:title, :description) 
+    end
+end
