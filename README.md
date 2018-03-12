@@ -38,3 +38,5 @@ I created the view files and controller for Subjects.
 Then I created the subjects_users many-many model and declared the realtions.
 
 I styled the devise view files and rewrote them with simple_form.
+
+Added name and username to Users table, configured Subject index and show page.
