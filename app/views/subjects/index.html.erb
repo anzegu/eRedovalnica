@@ -1,0 +1,14 @@
+<% if @subjects.blank? %>
+	<h3>There are no subjects</h3>
+<% else %> 
+	<div class="row">
+		<% @subjects.each do |subject| %>
+			<div class="col-md-6.col-md-offset-3 box">
+                <h2><a href="/subjects/ <%= subject.id %>"><%= subject.title %></a></h2>
+                <p><%= truncate(subject.description, length:50) %></p>
+                	<% @u = User.where(id: subject.user_id ).take %>
+                		<p>Izvajalec: <%= @u.name + ' ' + @u.surname %></p>
+			</div>
+		<% end %>
+	</div>
+<% end %>

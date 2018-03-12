@@ -11,6 +11,12 @@ class SubjectsController < ApplicationController
     
     def create
         @subject = current_user.subjects.build(subject_params)
+        
+        if @subject.save
+            redirect_to @subject
+        else
+            render 'new'
+        end
     end
     
     def updated
