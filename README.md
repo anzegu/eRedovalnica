@@ -30,3 +30,11 @@ Then I followed the instructions at https://github.com/plataformatec/devise.
 The devise database wasn't quite what I wanted it to be so I added the migration file: add_user_status_to_users user_status:integer, and manually editing the migration to:
 
 add_column :users, :user_status, :integer, :null => false, :default => 0
+
+The next gems that I installed were 'bootstrap-sass' and 'simple_form'.
+
+I created the view files and controller for Subjects.
+
+Then I created the subjects_users many-many model and declared the realtions.
+
+I styled the devise view files and rewrote them with simple_form.
