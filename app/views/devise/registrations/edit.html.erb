@@ -9,15 +9,15 @@
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
       <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
     <% end %>
-
+    
+  	<%= f.input :name, required: true, autofocus: true %>
+  	<%= f.input :surname, required: true, autofocus: true %>
     <%= f.input :password, autocomplete: "off", hint: "Leave it blank if you don't want to change it", required: false %>
     <%= f.input :password_confirmation, required: false %>
     <%= f.input :current_password, hint: "We need your current password to confirm your changes", required: true %>
-    <% if current_user.status == 2 %>
-      <%= f.radio_button :status, "0" %> Dijak 
-      <%= f.radio_button :status, "1" %> Profesor 
-      <%= f.radio_button :status, "2" %> Administrator
-    <% end %>
+    <%= f.radio_button :status, "0" %> Dijak 
+    <%= f.radio_button :status, "1" %> Profesor 
+    <%= f.radio_button :status, "2" %> Administrator
   </div>
   <br />
   <div class="form-actions">

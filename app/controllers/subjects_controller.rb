@@ -1,5 +1,6 @@
 class SubjectsController < ApplicationController
     before_action :find_subject, only: [:show, :edit, :update, :destroy]
+    before_action :authenticate_user!
     
     def index
         @subjects = Subject.where(user_id: current_user)
@@ -11,17 +12,18 @@ class SubjectsController < ApplicationController
     
     def create
         @subject = current_user.subjects.build(subject_params)
+        @subject.user_id = current_user.id
         
         if @subject.save
-            redirect_to @subject
+            redirect_to @subject, notice: "Subject successfully added!"
         else
             render 'new'
         end
     end
     
-    def updated
-       if @subject.update
-           redirect_to @subject
+    def update
+       if @subject.update(subject_params)
+           redirect_to @subject, notice: "Subject successfully updated!"
        else
            render 'new'
        end
@@ -29,7 +31,7 @@ class SubjectsController < ApplicationController
     
     def destroy
        @subject.destroy
-       redirect_to subjects_path
+       redirect_to subjects_path, notice: "Subject successfully deleted!"
     end
     
     private

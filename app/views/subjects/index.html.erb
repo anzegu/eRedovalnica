@@ -8,6 +8,10 @@
                 <p><%= truncate(subject.description, length:50) %></p>
                 	<% @u = User.where(id: subject.user_id ).take %>
                 		<p>Izvajalec: <%= @u.name + ' ' + @u.surname %></p>
+                <% if current_user.status == 1 || current_user.status == 2 %>
+		            <%= link_to 'Edit', edit_subject_path(subject) %> |
+	            	<%= link_to 'Delete', subject_path(subject), method: :delete, data: { confirm: 'Are you sure?' } %>
+	            <% end %>
 			</div>
 		<% end %>
 	</div>
