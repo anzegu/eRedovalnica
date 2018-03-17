@@ -1,1 +1,8 @@
-<% simple_form_for()
+<div class="form-inputs">
+    <%= simple_form_for([@subject, @subject.grades.build]) do |f| %>
+        <%= f.hidden_field :user_id, value: @user.id %>
+        <%= f.input :value, as: :radio_buttons, collection: [['1', '1'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5']], required: true %>
+        <%= f.input :description, as: :text %>
+        <%= f.button :submit, "Add", class: "btn-custom2" %>
+    <% end %> 
+</div>

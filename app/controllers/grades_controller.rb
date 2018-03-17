@@ -2,10 +2,8 @@ class GradesController < ApplicationController
     
     def create
         @subject = Subject.find(params[:subject_id])
-        @user = SubjectsUser.where(subject_id: @subject.id)
-        @grade = @subject.grade.create(params[:grade].permit(:value, :description))
-        @grade.user_id = @user.id
-        
+        @grade = @subject.grades.create(params[:grade].permit(:value, :description, :user_id))
+
         if @grade.save
             redirect_to subject_path(@subject), notice: "Grade added"
         else

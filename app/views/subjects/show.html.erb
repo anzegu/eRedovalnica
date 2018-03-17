@@ -1,3 +1,8 @@
+<script>
+	function showDiv() {
+   	document.getElementById('gradeDiv').style.display = "block";
+}
+</script>
 <div class="col-md-8">
 		<div class="play-info">
 			<h2 class="play-title"><%= @subject.title %></h2>
@@ -8,11 +13,19 @@
 	            	<%= link_to 'Delete', subject_path(@subject), method: :delete, data: { confirm: 'Are you sure?' } %>
             <% end %>
             <br />
-            <%= SubjectsUser.where(subject_id: @subject.id).find_each do |su| %>
+            <% SubjectsUser.where(subject_id: @subject.id).each do |su| %>
             	<br />
-            	<div class="col-md-6.col-md-offset-3 box">
-            		<% @user = User.where(id: su.user_id).take %>
-        				<p>Student: <% @user.name + ' ' + @user.surname %></p>
+            	<div>
+            		<% @user = User.find_by(id: su.user_id) %>
+        				<div class="box"><%= @user.name + ' ' + @user.surname %><br />
+        					<% Grade.where(user_id: @user.id).each do |grade| %>
+        						<p><%= grade.value %><br /></p>
+        						<p><b>Description: </b><i><%= grade.description %></i></p>
+        						<p><b>Submited <%= time_ago_in_words(grade.created_at) %> ago</b></p>
+        					<% end %>
+        					<input type="button" name="Add Grade" value="Add Grade" onclick="showDiv()" class="myButton"/>
+    					</div><br />
+        				<div id="gradeDiv" style="display:none;"><%= render "grades/form" %></div>
         		</div>
 			<% end %>
 		</div>
