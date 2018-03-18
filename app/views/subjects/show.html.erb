@@ -13,17 +13,23 @@
 	            	<%= link_to 'Delete', subject_path(@subject), method: :delete, data: { confirm: 'Are you sure?' } %>
             <% end %>
             <br />
-            <% SubjectsUser.where(subject_id: @subject.id).each do |su| %>
+            <% @su.each do |su| %>
             	<br />
             	<div>
-            		<% @user = User.find_by(id: su.user_id) %>
-        				<div class="box"><%= @user.name + ' ' + @user.surname %><br />
-        					<% Grade.where(user_id: @user.id).each do |grade| %>
-        						<p><%= grade.value %><br /></p>
-        						<p><b>Description: </b><i><%= grade.description %></i></p>
-        						<p><b>Submited <%= time_ago_in_words(grade.created_at) %> ago</b></p>
+            		<% @user = User.find(su.user_id) %>
+        				<div class="box"><b><%= @user.name + ' ' + @user.surname %></b><br />
+        				<table border="1" style="width: 100%; margin: 0 0 5px 0;">
+        					<tr>
+        					<% @grade = Grade.where(user_id: @user.id).each do |grade| %>
+        						<td style="width:10%; text-align: center;"><b><%= grade.value %></b></td> 
+        						<td style="width:78%; padding: 3px;"><q><i><%= grade.description %></i></q></td>
+        						<td style="width:12%; text-align: center;"><%= grade.created_at.to_date %></td>
+        						<td><%= link_to "Edit", edit_subject_grade_path(grade) %></td>
+        						<td><%= link_to "Delete", [grade.subject, grade], method: :delete, data: { confirm: "Are you sure" } %></td>
+        					</tr>	
         					<% end %>
-        					<input type="button" name="Add Grade" value="Add Grade" onclick="showDiv()" class="myButton"/>
+        				</table>	
+        				<input type="button" name="Add Grade" value="Add Grade" onclick="showDiv()" class="myButton"/>
     					</div><br />
         				<div id="gradeDiv" style="display:none;"><%= render "grades/form" %></div>
         		</div>

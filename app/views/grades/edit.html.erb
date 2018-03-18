@@ -1,0 +1,11 @@
+<div class="col-md-10 col-md-offset-1">
+	<div class="new-play-form">
+		<h1>Edit Grade</h1>
+
+		<%= simple_form_for (@subject.grades) do |f| %>
+            <%= f.input :value, as: :radio_buttons, collection: [['1', '1'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5']], required: true %>
+            <%= f.input :description, as: :text %>
+            <%= f.button :submit, "Add", class: "btn-custom2" %>
+        <% end %> 
+	</div>
+</div>

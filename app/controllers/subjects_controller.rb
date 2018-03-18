@@ -6,6 +6,10 @@ class SubjectsController < ApplicationController
         @subjects = Subject.where(user_id: current_user)
     end
     
+    def show
+        @su = SubjectsUser.where(subject_id: @subject.id)
+    end
+    
     def new
         @subject = current_user.subjects.build
     end
