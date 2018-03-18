@@ -38,6 +38,10 @@ class SubjectsController < ApplicationController
        redirect_to subjects_path, notice: "Subject successfully deleted!"
     end
     
+    def students_add
+        @user = User.where.not(status: 1).order(surname: :desc, name: :desc)
+    end
+    
     private
     
     def find_subject
