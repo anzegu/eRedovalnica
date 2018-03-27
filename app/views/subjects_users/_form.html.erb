@@ -1,0 +1,20 @@
+
+<%= simple_form_for(@subjects_user) do |f| %>
+  <%= f.error_notification %>
+  
+  <table border="1" style="width: 500px; margin: 0 0 5px 0;">
+      <% SubjectsUser.where.not(subject_id: @subject.id).each do |su| %>
+        <div class="form-inputs">
+          <% User.where(id: su.user_id).each do |student| %>
+            <tr>
+              <%= f.hidden_field :user_id, value: student.id %>
+              <%= f.hidden_field :subject_id, value: @subject.id %>
+              <td style="padding: 5px; width: 90%"><%= student.name %> <%= student.surname %></td>
+              <td style="text-align: center; width: 10%"><%= f.button :submit, "Add", class: "btn-custom2" %></td>
+            </tr>
+          <% end %>
+        </div>  
+      <% end %>   
+    </tr>
+  </table>
+<% end %>
