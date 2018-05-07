@@ -1,4 +1,5 @@
 <b>DESCRIPTION</b>
+
 This is a gradebook app that allows users to register - default as a student - then await the admin to change their status to a teacher or admin. 
 Teachers can create classes and edit them and delete them aswell, to which they can add students and grade them.
 Admins have all the rights; changing the users status, deleting, adding, creating subjects.
