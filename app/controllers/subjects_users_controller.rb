@@ -15,7 +15,17 @@ class SubjectsUsersController < ApplicationController
   # GET /subjects_users/new
   def new
     @subject = Subject.find(params[:subject_id])
-    @subjects_user = SubjectsUser.new
+    @subjects_user = SubjectsUser.new(subjects_user_params)
+
+    respond_to do |format|
+      if @subjects_user.save
+        format.html { redirect_to subjects_path(@subject), notice: 'Subjects user was successfully created.' }
+        format.json { render :show, status: :created, location: @subjects_user }
+      else
+        format.html { render :new }
+        format.json { render json: @subjects_user.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # GET /subjects_users/1/edit
@@ -29,8 +39,8 @@ class SubjectsUsersController < ApplicationController
 
     respond_to do |format|
       if @subjects_user.save
-        format.html { redirect_to subjects_path(@subjects_user.subject_id), notice: 'Subjects user was successfully created.' }
-        format.json { render :show, status: :created, location: @subjects_user }
+        format.html { redirect_to subjects_path(@subject), notice: 'Subjects user was successfully created.' }
+        format.json { render :show, status: :created, location: @subject }
       else
         format.html { render :new }
         format.json { render json: @subjects_user.errors, status: :unprocessable_entity }
@@ -57,7 +67,7 @@ class SubjectsUsersController < ApplicationController
   def destroy
     @subjects_user.destroy
     respond_to do |format|
-      format.html { redirect_to subjects_users_url, notice: 'Subjects user was successfully destroyed.' }
+      format.html { redirect_to subjects_path(@subject), notice: 'Subjects user was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -70,6 +80,6 @@ class SubjectsUsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subjects_user_params
-      params.require(:subjects_user).permit(:subject_id, :user_id) 
+      params.permit(:subject_id, :user_id) 
     end
 end

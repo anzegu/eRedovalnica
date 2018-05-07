@@ -1,0 +1,14 @@
+<% User.where(status: 0).each do |student| %>
+    <% SubjectsUser.where(subject_id: params[:sid]).each do |su| %>
+        <% if student.id==su.user_id %>
+            <% @state = true %>
+        <% else %>
+            <% @state = false %>
+        <% end %>
+    <% end %>    
+    <% if !@state %>
+        <h3><%= student.name %> <%= student.surname %></h3>
+        <%= link_to "Add", { :action => :new, :controller => :subjects_users, :subject_id => params[:sid], :user_id => student.id} %>
+    <% end %>
+    <br />
+<% end %>

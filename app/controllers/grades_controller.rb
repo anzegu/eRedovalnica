@@ -12,7 +12,7 @@ class GradesController < ApplicationController
     end
     
     def edit
-        @grade = @subject.grades.find(params[:id])
+        @grade = Grade.find(params[:id])
     end
     
     def update

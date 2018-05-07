@@ -5,4 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   has_and_belongs_to_many :subjects
   has_many :grades, dependent: :destroy
+  
+  attr_accessor :value
 end

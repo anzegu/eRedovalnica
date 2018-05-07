@@ -1,5 +1,5 @@
 <div class="modal-content">
-    <%= simple_form_for([@subject, @subject.grades.build]) do |f| %>
+    <%= simple_form_for([@subject, @subject.grades.build], remote: true) do |f| %>
         <%= f.hidden_field :user_id, id: "hidden_input" %>
         <%= f.input :value, as: :radio_buttons, collection: [['1', '1'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5']], required: true %>
         <%= f.input :description, as: :text %>

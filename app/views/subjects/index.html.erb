@@ -1,18 +1,32 @@
-<% if @subjects.blank? %>
-	<h3>There are no subjects</h3>
-<% else %> 
-	<div class="row">
-		<% @subjects.each do |subject| %>
+<% if current_user.status == 1 || current_user.status == 2 %>
+	<% if @subjects.blank? %>
+		<h3>There are no subjects</h3>
+	<% else %> 
+		<div class="row">
+			<% @subjects.each do |subject| %>
+				<div class="col-md-6.col-md-offset-3 box">
+	                <h2><a href="/subjects/<%= subject.id %>"><%= subject.title %></a></h2>
+	                <p><%= truncate(subject.description, length:50) %></p>
+	                	<% @u = User.where(id: subject.user_id ).take %>
+	                		<p>Izvajalec: <%= @u.name + ' ' + @u.surname %></p>
+	                <% if current_user.status == 1 || current_user.status == 2 %>
+			            <%= link_to 'Edit', edit_subject_path(subject) %> |
+		            	<%= link_to 'Delete', subject_path(subject), method: :delete, data: { confirm: 'Are you sure?' } %>
+		            <% end %>
+				</div>
+			<% end %>
+		</div>
+	<% end %>
+<% elsif current_user.status == 0 %>
+	<h3>My subjects</h3>
+	<% SubjectsUser.where(user_id: current_user.id).each do |su| %>
+		<% Subject.where(id: su.subject_id).each do |subject| %>
 			<div class="col-md-6.col-md-offset-3 box">
-                <h2><a href="/subjects/<%= subject.id %>"><%= subject.title %></a></h2>
-                <p><%= truncate(subject.description, length:50) %></p>
-                	<% @u = User.where(id: subject.user_id ).take %>
-                		<p>Izvajalec: <%= @u.name + ' ' + @u.surname %></p>
-                <% if current_user.status == 1 || current_user.status == 2 %>
-		            <%= link_to 'Edit', edit_subject_path(subject) %> |
-	            	<%= link_to 'Delete', subject_path(subject), method: :delete, data: { confirm: 'Are you sure?' } %>
-	            <% end %>
+			    <h2><a href="/subjects/<%= subject.id %>"><%= subject.title %></a></h2>
+			    <p><%= truncate(subject.description, length:50) %></p>
+			    	<% @u = User.where(id: subject.user_id ).take %>
+			    		<p>Izvajalec: <%= @u.name %> <%= @u.surname %></p>
 			</div>
 		<% end %>
-	</div>
+	<% end %>	
 <% end %>

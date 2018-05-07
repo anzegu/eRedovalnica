@@ -6,15 +6,15 @@
 	<div>
 		<% User.where(id: su.user_id).each do |user| %>
 			<div class="box"><b><%= user.name %> <%= user.surname %></b><br />
-				<%= link_to "Remove", {:controller => "subjects_users", :action => 'destroy', :id => su.id}, :confirm => "Are you sure you want to unfriend #{user.name}?", :method => :delete %>
+				<%= link_to "Remove", {:controller => "subjects_users", :action => 'destroy', :id => su.id}, data: { confirm: "Are you sure?" }, :method => :delete %>
 				<table border="1" style="width: 100%; margin: 0 0 5px 0;">
 					<tr>
 					<% @grade = Grade.where(user_id: user.id, subject_id: @subject.id).each do |grade| %>
 						<td style="width:10%; text-align: center;"><b><%= grade.value %></b></td> 
 						<td style="width:78%; padding: 3px;"><q><i><%= grade.description %></i></q></td>
 						<td style="width:12%; text-align: center;"><%= grade.created_at.to_date %></td>
-						<td><%= link_to "Edit", edit_subject_grade_path(grade) %></td>
-						<td><%= link_to "Delete", [grade.subject, grade], method: :delete, data: { confirm: "Are you sure" } %></td>
+						<td><%= link_to "Edit", edit_subject_grade_path(@subject, grade) %></td>
+						<td><%= link_to "Delete", [grade.subject, grade], method: :delete, data: { confirm: "Are you sure?" } %></td>
 					</tr>	
 					<% end %>
 				</table>	

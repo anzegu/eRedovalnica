@@ -33,6 +33,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'bootstrap-sass'
 gem 'simple_form'
+gem 'jquery-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

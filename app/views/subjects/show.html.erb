@@ -12,11 +12,35 @@
 			<%= link_to "Back", root_path %> 
 			<% if current_user.status == 1 || current_user.status == 2 %>
 		            | <%= link_to 'Edit', edit_subject_path(@subject) %> |
-	            	<%= link_to 'Delete', subject_path(@subject), method: :delete, data: { confirm: 'Are you sure?' } %>
-	            	| <%= link_to 'Add Students', new_subjects_user_path(:subject_id => @subject.id) %> 
-            <% end %>
+	            	<%= link_to 'Delete', subject_path(@subject), method: :delete, data: { confirm: 'Are you sure?' }, remote: true %>
+	            	| <%= link_to 'Add Students', add_student_path(@subject.id) %> 
             <br />
             <div><%= render "subjects_users/show" %></div>
+            <% else %>
+            	<h3>My grades</h3>
+            	<table width="375px">
+		            <% Grade.where(subject_id: params[:id], user_id: current_user.id).each do |grade| %>
+		            	<tr>
+		            		<td>
+		            			<h4><%= grade.value %></h4>
+		            		</td>
+		            		<% if grade.description.present? %>
+		            			<td><%= grade.description %></td>
+		            		<% else %>
+		            			<td>This grade has no description.</td>
+		            		<% end %>
+		            	</tr>
+		            <% end %>
+		            <tr>
+		            	<td>
+		            		<h4><%= Grade.where(subject_id: params[:id], user_id: current_user.id).average(:value) %></h4>
+		            	</td>
+		            	<td>
+		            		Your grade average.
+		            	</td>
+		            </tr>
+	            </table>
+            <% end %>
 		</div>
 		<div id="gradeDiv" class="modal"><%= render "grades/form" %></div>
 </div>
